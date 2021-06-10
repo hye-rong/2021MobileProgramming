@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTeamProject">
-        <activity android:name=".ShowArtListActivity"></activity>
+        <activity android:name=".mypage.MyPageActivity"></activity>
+        <activity android:name=".ShowArtListActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
