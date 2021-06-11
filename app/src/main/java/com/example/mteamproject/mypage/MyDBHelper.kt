@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.view.Gravity
 import android.widget.TableRow
 import android.widget.TextView
@@ -14,16 +15,17 @@ import android.widget.TextView
 class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object{
         val DB_NAME = "mydb.db"
-        val DB_VERSION = 1
+        val DB_VERSION = 4
         val FAVORITE_TABLE_NAME = "favorites"
         val PURCHASE_TABLE_NAME = "purchases"
         val PID = "pid"
+        val PAUTHOR = "pauthor"
         val PPIC = "ppic"
         val PPRICE = "pprice"
     }
-    fun getAllRecord(i:Int):ArrayList<Product>{
+    fun getAllRecord(i:Int):MutableList<Product>{
         // 0: 즐겨찾기 1: 구매목록
-        val pList = arrayListOf<Product>()
+        val pList = mutableListOf<Product>()
         val strsql = if(i==0){
             "select * from $FAVORITE_TABLE_NAME;"
         } else {
@@ -34,14 +36,16 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val db = readableDatabase
         val cursor = db.rawQuery(strsql, null)
         cursor.moveToFirst()
-
+        Log.d("EOEOEO", "getAllRecord : ${cursor.count}")
         if (cursor.count == 0) return pList
 
         do {
             pList.add(
                 Product(
-                    cursor.getString(0), Uri.parse(cursor.getString(1)),
-                    cursor.getInt(2)
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    Uri.parse(cursor.getString(2)),
+                    cursor.getInt(3)
                 )
             )
         } while (cursor.moveToNext())
@@ -52,17 +56,21 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
     }
 
     fun insertFavoriteProduct(product: Product){
+        Log.d("EOEOEO", "insertFavoriteProduct: $product")
         val values = ContentValues()
         values.put(PID, product.pId)
+        values.put(PAUTHOR, product.pAuthor)
         values.put(PPIC, product.pPic.toString())
         values.put(PPRICE, product.pPrice)
         val db = writableDatabase
-        db.insert(FAVORITE_TABLE_NAME, null, values)
+        val flag = db.insert(FAVORITE_TABLE_NAME, null, values)
+        Log.d("EOEOEO","flag: $flag")
         db.close()
     }
     fun insertPurchaseProduct(product: Product){
         val values = ContentValues()
         values.put(PID, product.pId)
+        values.put(PAUTHOR, product.pAuthor)
         values.put(PPIC, product.pPic.toString())
         values.put(PPRICE, product.pPrice)
         val db = writableDatabase
@@ -85,11 +93,13 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
 
     override fun onCreate(db: SQLiteDatabase?) {
         val create_ftable = "create table if not exists $FAVORITE_TABLE_NAME("+
-                "$PID integer, "+
+                "$PID text, "+
+                "$PAUTHOR text, "+
                 "$PPIC text, "+
                 "$PPRICE integer);"
         val create_ptable = "create table if not exists $PURCHASE_TABLE_NAME("+
-                "$PID integer, "+
+                "$PID text, "+
+                "$PAUTHOR text, "+
                 "$PPIC text, "+
                 "$PPRICE integer);"
         db!!.execSQL(create_ftable)
