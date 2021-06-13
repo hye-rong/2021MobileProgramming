@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genre_array">
+        <item>추상화</item>
+        <item>인물화</item>
+        <item>초상화</item>
+        <item>풍경화</item>
+    </string-array>
+</resources>
