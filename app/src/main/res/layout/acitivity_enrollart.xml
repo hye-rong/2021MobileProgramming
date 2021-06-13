@@ -17,7 +17,7 @@
     <ImageView
         android:id="@+id/enroll_img"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:layout_marginBottom="15dp"
         android:src="@drawable/ic_android_black_24dp"/>
 
@@ -48,17 +48,30 @@
             android:id="@+id/pickDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="경매 종료 날짜"/>
+            android:text="경매종료 날짜"
+            android:textSize="10sp"/>
+        <Button
+            android:id="@+id/pickTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경매종료 시간"
+            android:textSize="10sp"/>
         <TextView
+            android:id="@+id/enroll_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="YYYYMMDD oo시 oo분"/>
-        <EditText
+            android:text="YYYYMMDD"/>
+        <TextView
+            android:id="@+id/enroll_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="20"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="oo시oo분"/>
+
+
     </LinearLayout>
 
     <LinearLayout

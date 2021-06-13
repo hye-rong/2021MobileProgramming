@@ -5,5 +5,7 @@
         <item>인물화</item>
         <item>초상화</item>
         <item>풍경화</item>
+        <item>서양화</item>
+        <item>동양화</item>
     </string-array>
 </resources>
