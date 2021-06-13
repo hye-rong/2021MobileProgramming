@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mteamproject.databinding.ArtRowBinding
 
 class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapater.ViewHolder>(){
+    val cateory = arrayListOf<String>("풍경","추상화","기타")
     inner class ViewHolder(val binding: ArtRowBinding):RecyclerView.ViewHolder(binding.root){
 
     }
@@ -20,10 +21,10 @@ class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapa
         //TODO("Not yet implemented")
         holder.binding.apply {
             imageViewArt.setImageBitmap(items[pos].artwork)
-            imageViewArtistIcon.setImageBitmap(items[pos].artist.icon)
+            imageViewArtistIcon.setImageBitmap(items[pos].artist!!.icon)
             textViewTitle.text = items[pos].title
-            textViewArtist.text = items[pos].artist.name
-            textViewCategory.text = items[pos].category
+            textViewArtist.text = items[pos].artist!!.name
+            textViewCategory.text = cateory[items[pos].categorycode]
             textViewPrice.text = items[pos].price.toString()
         }
     }
