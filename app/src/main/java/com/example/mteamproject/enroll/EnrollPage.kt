@@ -1,10 +1,15 @@
 package com.example.mteamproject.enroll
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.AcitivityEnrollartBinding
@@ -72,7 +77,37 @@ class EnrollPage: AppCompatActivity() {
 
     private fun pickEndDate() {
         binding.pickDay.setOnClickListener {
+            //달력
+            var calendar = Calendar.getInstance()
+            var year = calendar.get(Calendar.YEAR)
+            var month =  calendar.get(Calendar.MONTH)
+            var day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            val dpd = object : DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    binding.enrollDay.text = "${year}년${month + 1}월${dayOfMonth}일"
+                }
+
+            }
+
+            var builder = DatePickerDialog(this, dpd, year, month, day)
+            builder.show()
+        }
+        binding.pickTime.setOnClickListener {
+            //시계
+            var time = Calendar.getInstance()
+            var hour = time.get(Calendar.HOUR)
+            var minute = time.get(Calendar.MINUTE)
+
+            var tpd = object : TimePickerDialog.OnTimeSetListener {
+                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                    binding.enrollTime.text = "${hourOfDay}시${minute}분"
+
+                }
+            }
+
+            var builder2 = TimePickerDialog(this, tpd, hour, minute, false)
+            builder2.show()
         }
     }
 
