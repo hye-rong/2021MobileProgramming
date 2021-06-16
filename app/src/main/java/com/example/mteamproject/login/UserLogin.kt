@@ -24,7 +24,6 @@ class UserLogin : AppCompatActivity() {
         binding.apply {
             loginBtn.setOnClickListener{
                 var idFlag = false
-                var pwFlag = false
                 var arr = arrayListOf<Any>()
                 rdb.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
@@ -46,13 +45,12 @@ class UserLogin : AppCompatActivity() {
                                     }
                                     if(arr[4].toString() == userPW.text.toString()) {
                                         Toast.makeText(this@UserLogin, "로그인 성공", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(this@UserLogin, asdActivity::class.java)
+                                        val intent = Intent(this@UserLogin, ArtistList::class.java)
                                         intent.putExtra("uId", userID.text.toString())
                                         startActivity(intent)
-                                    }else{
-                                            Toast.makeText(this@UserLogin, "비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show()
-                                            userPW.text.clear()
-
+                                    }else {
+                                        Toast.makeText(this@UserLogin,"비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show()
+                                        userPW.text.clear()
                                     }
                                 }
                             })

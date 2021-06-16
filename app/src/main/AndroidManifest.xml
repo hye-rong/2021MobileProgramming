@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTeamProject">
-        <activity android:name=".login.asdActivity"></activity>
+        <activity android:name=".login.ArtistProduct"></activity>
+        <activity android:name=".login.ProductTest" />
+        <activity android:name=".login.ArtistPage" />
+        <activity android:name=".ArtistPage" />
+        <activity android:name=".login.ArtistList" />
+        <activity android:name=".login.asdActivity" />
         <activity android:name=".login.UserSignUp" />
         <activity android:name=".login.UserLogin">
             <intent-filter>
