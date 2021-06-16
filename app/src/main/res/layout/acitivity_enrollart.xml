@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/acitivity_enroll_art_scene"
     android:orientation="vertical">
+    <!--app:layoutDescription="@xml/acitivity_enroll_art_scene"-->
+
 
     <TextView
         android:id="@+id/enroll_title"
