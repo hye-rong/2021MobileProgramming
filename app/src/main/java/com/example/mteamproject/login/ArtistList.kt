@@ -1,8 +1,10 @@
 package com.example.mteamproject.login
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mteamproject.databinding.ActivityArtistListBinding
@@ -15,10 +17,14 @@ class ArtistList : AppCompatActivity() {
     lateinit var binding: ActivityArtistListBinding
     lateinit var adapter: ArtistListAdapter
     lateinit var rdb: DatabaseReference
+    lateinit var sharedPreferences: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArtistListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        editor = sharedPreferences.edit()
         init()
     }
     private fun init() {
@@ -41,6 +47,15 @@ class ArtistList : AppCompatActivity() {
         }
         binding.apply {
             artistRecyclerView.adapter = adapter
+            logout.setOnClickListener {
+                editor.putBoolean("AutoLogin", false)
+                editor.apply()
+                editor.putString("Id", "")
+                editor.putString("Password","")
+                editor.commit()
+                val intent = Intent(this@ArtistList, UserLogin::class.java)
+                startActivity(intent)
+            }
             homeBtn.setOnClickListener {
                 val intent = Intent(this@ArtistList, UserLogin::class.java)
                 startActivity(intent)
