@@ -6,20 +6,60 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ShowArtListActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/baseline">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="10dp"
+            android:text="ART LIST"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
+        <TextView
+            android:id="@+id/textView_showartistlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="작가보기" />
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+            android:textSize="15sp"/>
+        <ImageButton
+            android:id="@+id/homeBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_baseline_home_24"/>
+    </LinearLayout>
     <TabHost
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content" />
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -29,7 +69,7 @@
                 <LinearLayout
                     android:id="@+id/SHOW_ALL"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="778dp"
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -73,6 +113,6 @@
                         android:layout_height="match_parent" />
                 </LinearLayout>
             </FrameLayout>
-        </LinearLayout>
+            </LinearLayout>
     </TabHost>
 </LinearLayout>
