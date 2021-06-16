@@ -42,6 +42,8 @@ class MPMainFragment : Fragment() {
 
         mpViewModel.soldsLiveData.value = myDBHelper.getAllRecord(1)
         //내 작품 가져오는 작업 해줘야함 - firebase
+
+
         Log.d("EOEOEO","LiveData: ${mpViewModel.likesLiveData.value!!.size}")
         mpViewModel.likesLiveData.observe(viewLifecycleOwner, Observer {
             binding.likeNum.text = it.size.toString()

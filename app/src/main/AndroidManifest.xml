@@ -10,18 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MTeamProject">
         <activity android:name=".mypage.MyPageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ShowArtListActivity" />
         <activity android:name=".MainActivity">
 
         </activity>
         <activity android:name=".enroll.EnrollPage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -199,6 +199,26 @@
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_navigate_next_24"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/auctionBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/box_layout"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"
+            android:text="내가 참여중인 경매보기"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_navigate_next_24"/>
+    </LinearLayout>
 
 
 
