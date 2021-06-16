@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mteamproject.ShowArtListActivity
 import com.example.mteamproject.databinding.ActivityArtistListBinding
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
@@ -58,6 +59,10 @@ class ArtistList : AppCompatActivity() {
             }
             homeBtn.setOnClickListener {
                 val intent = Intent(this@ArtistList, UserLogin::class.java)
+                startActivity(intent)
+            }
+            textViewShowartlist.setOnClickListener {
+                val intent = Intent(this@ArtistList,ShowArtListActivity::class.java)
                 startActivity(intent)
             }
         }

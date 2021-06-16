@@ -44,6 +44,7 @@ class ArtistProduct : AppCompatActivity() {
         binding.apply {
             artistProductRecyclerView.layoutManager = layoutManager
             artistProductRecyclerView.adapter = adapter
+
         }
     }
     override fun onStart() {
