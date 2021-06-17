@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mteamproject">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,16 +19,18 @@
         <activity android:name=".login.asdActivity" />
         <activity android:name=".login.UserSignUp" />
         <activity android:name=".login.UserLogin">
+
+        </activity>
+        <activity android:name=".mypage.MyPageActivity" />
+        <activity android:name=".ShowArtListActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".enroll.EnrollPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mypage.MyPageActivity" />
-        <activity android:name=".ShowArtListActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".enroll.EnrollPage" />
     </application>
 
 </manifest>
