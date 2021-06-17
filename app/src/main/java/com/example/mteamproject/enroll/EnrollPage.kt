@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.AcitivityEnrollartBinding
 import java.io.File
+import java.util.*
 
 class EnrollPage: AppCompatActivity() {
     val GET_GALLERY_IMAGE = 200
@@ -22,6 +24,7 @@ class EnrollPage: AppCompatActivity() {
     var userGenre : String = "" //장르
     var enrollTime : String = ""
     var sellPrice : Int = 0
+    var uploadDate = mutableListOf<Int>(0,0,0,0,0)
 
     lateinit var binding: AcitivityEnrollartBinding
     lateinit var sharedPreferences: SharedPreferences
@@ -99,6 +102,9 @@ class EnrollPage: AppCompatActivity() {
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                     binding.enrollDay.text = "${year}년${month + 1}월${dayOfMonth}일"
                     enrollTime = "${year}년${month + 1}월${dayOfMonth}일"
+                    uploadDate[0]=year
+                    uploadDate[1]=month
+                    uploadDate[2]=dayOfMonth
                 }
 
             }
@@ -116,6 +122,8 @@ class EnrollPage: AppCompatActivity() {
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
                     binding.enrollTime.text = "${hourOfDay}시${minute}분"
                     enrollTime += "${hourOfDay}시${minute}분"
+                    uploadDate[3]=hourOfDay
+                    uploadDate[4]=minute
                 }
             }
 
@@ -129,6 +137,11 @@ class EnrollPage: AppCompatActivity() {
         // 유저 id를 어떻게 받아올 것인가?
 
         binding.sendToDB.setOnClickListener {
+            var now = System.currentTimeMillis()
+            var date = Date(now)
+            var preTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            var getTime = preTime.format(date)
+
 
             sellPrice = binding.sellPriceInput.text.toString().toInt()
 
@@ -139,7 +152,8 @@ class EnrollPage: AppCompatActivity() {
                 userGenre,
                 sellPrice,
                 ifauction,
-                enrollTime
+                uploadDate,
+                getTime
             )
             var myEnrollDB = EnrollDB(enrollInput)
             myEnrollDB.addEnrollDB()
