@@ -119,6 +119,11 @@ class ShowArtListActivity : AppCompatActivity() {
         binding.apply {
             Log.i("init","init")
             adapter1 = ArtLitAdapater(arts1)
+            adapter1.setItemClickListener(object : ArtLitAdapater.ItemClickListener{
+                override fun onClick(view: View, pos: Int) {
+
+                }
+            })
             adapter2 = ArtLitAdapater(arts2)
             adapter3 = ArtLitAdapater(arts3)
             adapter4 = ArtLitAdapater(arts4)

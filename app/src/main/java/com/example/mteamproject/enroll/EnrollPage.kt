@@ -145,9 +145,9 @@ class EnrollPage: AppCompatActivity() {
 
             sellPrice = binding.sellPriceInput.text.toString().toInt()
 
-            //var userID = sharedPreferences.getString("inputId", null)
-
-            val enrollInput = EnrollData( "userID",
+//            var userID = sharedPreferences.getString("inputId", null)
+            var userID = intent.getStringExtra("uID")
+            val enrollInput = EnrollData(userID.toString(),
                 imgUrl,
                 userGenre,
                 sellPrice,
