@@ -1,10 +1,13 @@
 package com.example.mteamproject.enroll
 
+import android.content.SharedPreferences
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class EnrollDB(input: EnrollData) {
     lateinit var endb: DatabaseReference
+    lateinit var sharedPreferences: SharedPreferences
+
     var input : EnrollData
     init {
         this.input = input
@@ -14,10 +17,10 @@ class EnrollDB(input: EnrollData) {
         val database = FirebaseDatabase.getInstance()
         val Enref = database.getReference()
 
-        var userID = ""
-        //userID를 기준으로 그 아래에 EnrollData db 입력
 
-        Enref.child("Art").child("userID").push().setValue(input)
+
+
+        Enref.child("Art").child(input.userID).push().setValue(input)
    }
 
     public fun readEnrollDB() {

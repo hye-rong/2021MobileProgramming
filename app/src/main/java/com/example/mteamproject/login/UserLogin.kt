@@ -8,6 +8,7 @@ import android.preference.PreferenceManager
 import android.widget.Toast
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.ActivityUserLoginBinding
+import com.example.mteamproject.main.MainActivity
 import com.google.firebase.database.*
 
 class UserLogin : AppCompatActivity() {
@@ -70,7 +71,7 @@ class UserLogin : AppCompatActivity() {
                                                     "로그인 성공",
                                                     Toast.LENGTH_SHORT).show()
                                                 val intent =
-                                                    Intent(this@UserLogin, ArtistList::class.java)
+                                                    Intent(this@UserLogin, MainActivity::class.java)
                                                 intent.putExtra("uId", userID.text.toString())
                                                 startActivity(intent)
                                             } else {
@@ -89,6 +90,7 @@ class UserLogin : AppCompatActivity() {
                             }
                         }
                     })
+
                 }
                 signUpBtn.setOnClickListener {
                     val intent = Intent(this@UserLogin, UserSignUp::class.java)

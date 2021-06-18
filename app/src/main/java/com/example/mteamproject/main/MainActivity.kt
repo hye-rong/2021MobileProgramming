@@ -94,7 +94,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.upload_menu ->{
                     // 작품 upload로 이동
-                    val intent = Intent(this, EnrollPage::class.java)
+                    val uID = intent.getStringExtra("uId").toString()
+                    val intent = Intent(applicationContext, EnrollPage:: class.java)
+                    intent.putExtra("uID", uID)
                     startActivity(intent)
                 }
             }

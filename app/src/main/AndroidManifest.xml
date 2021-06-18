@@ -20,18 +20,21 @@
         <activity android:name=".login.asdActivity" />
         <activity android:name=".login.UserSignUp" />
         <activity android:name=".login.UserLogin">
+
         </activity>
         <activity android:name=".mypage.MyPageActivity"/>
         <activity android:name=".ShowArtListActivity">
 
         </activity>
         <activity android:name=".main.MainActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".enroll.EnrollPage"/>
     </application>
 

@@ -1,19 +1,30 @@
 package com.example.mteamproject
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mteamproject.databinding.ArtRowBinding
 
 class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapater.ViewHolder>(){
     val cateory = arrayListOf<String>("풍경","추상화","서양화","동양화","기타")
     inner class ViewHolder(val binding: ArtRowBinding):RecyclerView.ViewHolder(binding.root){
+    }
 
+    interface ItemClickListener {
+        fun onClick(view: View, pos: Int)
+    }
+    private lateinit var itemClickListener: ItemClickListener
+
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListener = itemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =ArtRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 //LayoutInflater.from(parent.context).inflate(R.layout.art_row,parent,false)
+
         return ViewHolder(view)
     }
 
@@ -33,6 +44,10 @@ class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapa
             }else {
                 textViewPrice.text = items[pos].price.toString()
             }
+        }
+
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it, pos)
         }
     }
 
