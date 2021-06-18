@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="홈"
+            />
+        <item
+            android:id="@+id/art_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="전체 작품 보기"
+            />
+        <item
+            android:id="@+id/auction_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="경매중인 작품 보기"
+            />
+        <item
+            android:id="@+id/artist_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="작가 소개"
+            />
 
+        <item
+            android:id="@+id/upload_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="작품 업로드"
+            />
+        <item
+            android:id="@+id/mypage_menu"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="My Page"
+            />
+    </group>
 </menu>

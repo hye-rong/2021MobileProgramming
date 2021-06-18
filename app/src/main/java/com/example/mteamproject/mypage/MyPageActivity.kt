@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
-import com.example.mteamproject.MainActivity
+import com.example.mteamproject.main.MainActivity
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.ActivityMyPageBinding
 

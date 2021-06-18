@@ -1,38 +1,37 @@
-package com.example.mteamproject
+package com.example.mteamproject.main
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mteamproject.R
+import com.example.mteamproject.ShowArtListActivity
 import com.example.mteamproject.databinding.ActivityMainBinding
 import com.example.mteamproject.enroll.EnrollPage
 import com.example.mteamproject.login.ArtistList
 import com.example.mteamproject.mypage.MyPageActivity
 import com.example.mteamproject.mypage.Product
-import com.example.mteamproject.mypage.SoldAdapter
-import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var adapter:AuctionRcAdapter
+    lateinit var adapter: AuctionRcAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initLayout()
-        initData()
+        init()
     }
 
-    fun initData(){
+    fun init(){
         // db에서 가져오도록 바꿔야함
         val aucList = arrayListOf<Product>(
             Product("111","111", Uri.parse("df"), 5000),
@@ -49,7 +48,14 @@ class MainActivity : AppCompatActivity() {
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity,
                 LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapter
+
+            viewpager.adapter = MainArtAdapter(aucList)
+            TabLayoutMediator(tabLayout, viewpager){
+                    _, _ ->
+
+            }.attach()
         }
+
     }
 
     fun initLayout(){
@@ -63,30 +69,30 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawers()
             val title = menuItem.title.toString()
             when(menuItem.itemId){
-                R.id.art_menu->{
+                R.id.art_menu ->{
                     //전체 작품 보기 Activity로 이동
                     val intent = Intent(this, ShowArtListActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.artist_menu->{
+                R.id.artist_menu ->{
                     //작가 소개 Activity로 이동
                     val intent = Intent(this, ArtistList::class.java)
                     startActivity(intent)
                 }
-                R.id.auction_menu->{
+                R.id.auction_menu ->{
                     // 경매 작품 보기 Activity로 이동
 
                 }
-                R.id.home_menu->{
+                R.id.home_menu ->{
                     // 홈화면
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.mypage_menu->{
+                R.id.mypage_menu ->{
                     val intent = Intent(this, MyPageActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.upload_menu->{
+                R.id.upload_menu ->{
                     // 작품 upload로 이동
                     val intent = Intent(this, EnrollPage::class.java)
                     startActivity(intent)

@@ -1,12 +1,10 @@
-package com.example.mteamproject
+package com.example.mteamproject.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mteamproject.databinding.MysoldrowBinding
 import com.example.mteamproject.databinding.SimpleAucRowBinding
 import com.example.mteamproject.mypage.Product
-import com.example.mteamproject.mypage.SoldAdapter
 
 class AuctionRcAdapter(val items:MutableList<Product>): RecyclerView.Adapter<AuctionRcAdapter.MyViewHolder>(){
 
