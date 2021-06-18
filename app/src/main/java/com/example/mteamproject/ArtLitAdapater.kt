@@ -20,8 +20,10 @@ class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapa
     override fun onBindViewHolder(holder: ViewHolder, pos: Int) {
         //TODO("Not yet implemented")
         holder.binding.apply {
-            imageViewArt.setImageBitmap(items[pos].artwork)
-            imageViewArtistIcon.setImageBitmap(items[pos].artist!!.icon)
+            if(items[pos].artwork!=null)
+                imageViewArt.setImageBitmap(items[pos].artwork)
+            if(items[pos].artist?.icon!=null)
+                imageViewArtistIcon.setImageBitmap(items[pos].artist?.icon)
             textViewTitle.text = items[pos].title
             textViewArtist.text = items[pos].artist!!.name
             textViewCategory.text = cateory[items[pos].category]

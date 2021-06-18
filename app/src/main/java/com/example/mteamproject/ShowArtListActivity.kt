@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BitmapFactory.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -24,6 +25,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.log
 
 class ShowArtListActivity : AppCompatActivity() {
@@ -54,54 +56,72 @@ class ShowArtListActivity : AppCompatActivity() {
         init()
     }
     private fun initData(){
-        db = FirebaseDatabase.getInstance().getReference("Art/usrID")
-        var data = db.get().addOnCompleteListener{
-            var children = it.result?.children
-            if(it.result!=null&& it.result?.childrenCount!!>0) {
-                if (children != null) {
+        db = FirebaseDatabase.getInstance().getReference("Art/userID")
+        db.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var children = snapshot.children
+                if(snapshot.childrenCount>0) {
                     for (i in children.iterator()) {
-                        //var artID:Int,var artwork:Bitmap?,var title:String, val artist:Artist?, var categorycode:Int,var price:Int,var updatedate:Date?, var soldout:Boolean,var Action:Boolean,var auctionstartdate:Date?,var auctionenddate:Date?
-                        val imageUrl = i.child("iamgeUrl") as URL
-                        var connection=imageUrl.openConnection()
-                        connection.connect()
-                        val nSize = connection.contentLength
-                        val bis = BufferedInputStream(connection.getInputStream(),nSize)
-                        val artwork =BitmapFactory.decodeStream(bis) as Bitmap
-                        bis.close()
-                        val title = i.child("title") as String
-                        val artist_name = i.child("userID") as String
-                        val artist = Artist( artist_name, null)
-                        val cat = i.child("genre") as String
-                        val catcode:Int = when(cat){
-                            "풍경"->0
-                            "추상화"->1
-                            "서양화"->2
-                            "동양화"->3
-                            else ->5
+                        //Log.i("data","${i.value as HashMap<String,String>}")
+                        val value = i.value as HashMap<String,String>
+                        val imageUrl =value["imageUrl"] as String
+                        var artwork = null
+                        try {
+                            val url = URL(imageUrl)
+                            var connection = url.openConnection() as HttpURLConnection
+                            connection.connect()
+                            val nSize = connection.contentLength
+                            val bis = BufferedInputStream(connection.getInputStream(), nSize)
+                            artwork = BitmapFactory.decodeStream(bis) as Nothing?
+                            bis.close()
+                            connection.disconnect()
+                        } catch (e: Exception) {
+                            Log.i("data", e.toString())
                         }
-                        val price = i.child("sellPrice") as Int
-                        val auction = i.child("ifauction") as Boolean
-                        val edate = i.child("endDate") as String
-                        val art = Art(artwork,title,artist,catcode,price,auction,edate)
+                        val title = value["title"] as String
+                        val artist_name = value["userID"] as String
+                        val artist = Artist(artist_name, null)
+                        val cat = value["genre"] as String
+                        val catcode: Int = when (cat) {
+                            "풍경" -> 0
+                            "추상화" -> 1
+                            "서양화" -> 2
+                            "동양화" -> 3
+                            else -> 5
+                        }
+                        val price = value["sellPrice"] as Long
+                        val auction = value["ifauction"] as Boolean
+                        val edate = value["endDate"].toString()
+                        val art = Art(artwork, title, artist, catcode, price.toInt(), auction, edate)
                         arts1.add(art)
                         when (catcode) {
-                            0 -> arts2.add(art)
-                            1 -> arts3.add(art)
-                            else -> arts4.add(art)
+                            0-> {arts2.add(art);adapter2.notifyItemInserted(arts2.size-1)}
+                            1 -> {arts3.add(art);adapter3.notifyItemInserted(arts3.size-1)}
+                            else -> {arts4.add(art);adapter4.notifyItemInserted(arts4.size-1)}
                         }
+                        Log.i("data",art.toString())
+                        adapter1.notifyItemInserted(arts1.size-1)
+
+
                     }
                 }
             }
-        }
-        adapter1 = ArtLitAdapater(arts1)
-        adapter2 = ArtLitAdapater(arts2)
-        adapter3 = ArtLitAdapater(arts3)
-        adapter4 = ArtLitAdapater(arts4)
+
+            override fun onCancelled(error: DatabaseError) {
+                //TODO("Not yet implemented")
+            }
+
+        })
     }
     private fun init(){
         val layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
 
         binding.apply {
+            Log.i("init","init")
+            adapter1 = ArtLitAdapater(arts1)
+            adapter2 = ArtLitAdapater(arts2)
+            adapter3 = ArtLitAdapater(arts3)
+            adapter4 = ArtLitAdapater(arts4)
             val items =arrayOf("전체보기","풍경화","추상화","others")
             val spinnerAdaper = ArrayAdapter(this@ShowArtListActivity,R.layout.support_simple_spinner_dropdown_item,items)
             spinner.adapter = spinnerAdaper
