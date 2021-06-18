@@ -27,7 +27,7 @@ class UserLogin : AppCompatActivity() {
 
     fun init(){
         if(sharedPreferences.getBoolean("AutoLogin", false)){
-            val intent = Intent(this@UserLogin, ArtistList::class.java)
+            val intent = Intent(this@UserLogin, MainActivity::class.java)
             startActivity(intent)
         }else {
             rdb = FirebaseDatabase.getInstance().getReference("UserDB/User")

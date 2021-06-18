@@ -21,7 +21,11 @@
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:title="작가 소개"
             />
-
+        <item
+            android:id="@+id/load_artist"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="작가 등록"
+            />
         <item
             android:id="@+id/upload_menu"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
@@ -31,6 +35,11 @@
             android:id="@+id/mypage_menu"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:title="My Page"
+            />
+        <item
+            android:id="@+id/logout"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="로그아웃"
             />
     </group>
 </menu>

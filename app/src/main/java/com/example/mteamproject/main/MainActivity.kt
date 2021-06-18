@@ -99,9 +99,49 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("uID", uID)
                     startActivity(intent)
                 }
+                R.id.load_artist->{
+                    //작가 등록 페이지로 이동
+                }
+                R.id.logout -> {
+                    //로그아웃 기능
+
+                }
             }
 
             true
+        }
+        binding.apply {
+            art1.setOnClickListener {
+                //풍경화 List 보여지게
+                val intent = Intent(this@MainActivity, ShowArtListActivity::class.java)
+                intent.putExtra("category", 1)
+                startActivity(intent)
+            }
+            art2.setOnClickListener {
+                //추상화 List 보여지게
+                val intent = Intent(this@MainActivity, ShowArtListActivity::class.java)
+                intent.putExtra("category", 2)
+                startActivity(intent)
+            }
+            art3.setOnClickListener {
+                //동양화 List 보여지게
+                val intent = Intent(this@MainActivity, ShowArtListActivity::class.java)
+                intent.putExtra("category", 3)
+                startActivity(intent)
+            }
+            art4.setOnClickListener {
+                //서양화 List 보여지게
+                val intent = Intent(this@MainActivity, ShowArtListActivity::class.java)
+                intent.putExtra("category", 4)
+                startActivity(intent)
+            }
+            artListBtn.setOnClickListener {
+                val intent = Intent(this@MainActivity, ShowArtListActivity::class.java)
+                startActivity(intent)
+            }
+            auctionBtn.setOnClickListener {
+                // 경매목록
+            }
         }
     }
 
@@ -110,7 +150,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("eoeoeo", "onOptionsItemSelected")
         Log.d("eoeoeo", "${item.itemId}")
         Log.d("eoeoeo", "${R.id.home}")
-        Log.d("eoeoeo", "R.id.home")
 
         binding.drawerLayout.openDrawer(GravityCompat.START)
         return true

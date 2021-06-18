@@ -1,7 +1,9 @@
 package com.example.mteamproject.mypage
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mteamproject.main.MainActivity
