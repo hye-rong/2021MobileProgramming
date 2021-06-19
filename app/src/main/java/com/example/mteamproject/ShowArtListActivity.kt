@@ -61,7 +61,13 @@ class ShowArtListActivity : AppCompatActivity() {
         init()
     }
     private fun initData(){
-        db = FirebaseDatabase.getInstance().getReference("ArtRCV")
+        val intent = intent
+        val aid = intent.getStringExtra("aId")
+
+        if(aid.toString().length >= 1)
+            db = FirebaseDatabase.getInstance().getReference("Art/$aid")
+        if(aid.toString() == "null")
+            db = FirebaseDatabase.getInstance().getReference("ArtRCV")
 
         db.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
