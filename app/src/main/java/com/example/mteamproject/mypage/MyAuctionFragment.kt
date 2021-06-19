@@ -70,7 +70,7 @@ class MyAuctionFragment : Fragment() {
                                     Log.d("eoeoeo", "현재시간: $date")
                                     Log.d("eoeoeo", "종료시간: $endDate")
 
-                                    if(endDate.after(date)){
+                                    if(endDate.before(date)){
                                         if(data.pPrice == price.toInt()){
                                             Toast.makeText(requireContext(),"경매 성공", Toast.LENGTH_LONG).show()
                                             adapter.items.removeAt(pos)
@@ -82,6 +82,10 @@ class MyAuctionFragment : Fragment() {
                                         }
                                         else{
                                             Toast.makeText(requireContext(),"경매 실패", Toast.LENGTH_LONG).show()
+                                            adapter.items.removeAt(pos)
+                                            adapter.notifyItemRemoved(pos)
+                                            val title = value["title"] as String
+                                            myDBHelper.deleteAuction(title)
                                         }
                                     }
                                     else{

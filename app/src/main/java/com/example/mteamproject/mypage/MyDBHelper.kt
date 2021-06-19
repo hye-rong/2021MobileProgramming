@@ -168,7 +168,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val flag = cursor.count!=0
         if(flag){
             cursor.moveToFirst()
-            db.delete(FAVORITE_TABLE_NAME, "$PID=?", arrayOf(pid))
+            db.delete(AUCTION_TABLE_NAME, "$PID=?", arrayOf(pid))
         }
         cursor.close()
         db.close()
