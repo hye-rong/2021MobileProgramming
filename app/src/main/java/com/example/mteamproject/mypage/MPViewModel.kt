@@ -8,5 +8,6 @@ class MPViewModel:ViewModel() {
     var likesLiveData = MutableLiveData<MutableList<Product>>()
     var soldsLiveData = MutableLiveData<MutableList<Product>>()
     var loadsLiveData = MutableLiveData<MutableList<Product>>()
+    var userLiveData = MutableLiveData<String>()
 
 }

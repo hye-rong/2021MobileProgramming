@@ -10,7 +10,7 @@ import android.util.Log
 class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object{
         val DB_NAME = "mydb.db"
-        val DB_VERSION = 5
+        val DB_VERSION = 6
         val FAVORITE_TABLE_NAME = "favorites"
         val PURCHASE_TABLE_NAME = "purchases"
         val COIN_TABLE_NAME = "coin"
@@ -20,6 +20,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val PPIC = "ppic"
         val PPRICE = "pprice"
         val PCOIN = "pcoin"
+        val PKEY = "pkey"
     }
     fun getAllRecord(i:Int):MutableList<Product>{
         // 0: 즐겨찾기 1: 구매목록
@@ -45,6 +46,32 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getInt(3)
+                )
+            )
+        } while (cursor.moveToNext())
+
+        cursor.close()
+        db.close()
+        return pList
+    }
+
+    fun getAuction():MutableList<Product>{
+        val pList = mutableListOf<Product>()
+        val strsql = "select * from $AUCTION_TABLE_NAME;"
+
+        val db = readableDatabase
+        val cursor = db.rawQuery(strsql, null)
+        cursor.moveToFirst()
+
+        if (cursor.count == 0) return pList
+
+        do {
+            pList.add(
+                Product(
+                    cursor.getString(0),
+                    cursor.getString(3),
+                    cursor.getString(1),
+                    cursor.getInt(2)
                 )
             )
         } while (cursor.moveToNext())
@@ -111,6 +138,16 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         db.insert(PURCHASE_TABLE_NAME, null, values)
         db.close()
     }
+    fun insertAuctionProduct(id:String, img:String, price:Int, key:String){
+        val values = ContentValues()
+        values.put(PID, id)
+        values.put(PPIC, img)
+        values.put(PPRICE, price)
+        values.put(PKEY, key)
+        val db = writableDatabase
+        db.insert(AUCTION_TABLE_NAME, null, values)
+        db.close()
+    }
     fun deleteFavoriteProduct(pid:String){
         val strsql = "select * from $FAVORITE_TABLE_NAME where $PID='$pid'"
         val db = writableDatabase
@@ -123,6 +160,18 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         cursor.close()
         db.close()
 
+    }
+    fun deleteAuction(pid:String){
+        val strsql = "select * from $AUCTION_TABLE_NAME where $PID='$pid'"
+        val db = writableDatabase
+        val cursor = db.rawQuery(strsql, null)
+        val flag = cursor.count!=0
+        if(flag){
+            cursor.moveToFirst()
+            db.delete(FAVORITE_TABLE_NAME, "$PID=?", arrayOf(pid))
+        }
+        cursor.close()
+        db.close()
     }
 
     fun findFavorite(pid:String):Boolean{
@@ -147,8 +196,10 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
                 "$PID text, "+
                 "$PCOIN integer);"
         val create_atable = "create table if not exists $AUCTION_TABLE_NAME("+
-                "$PID text, "+
-                "$PCOIN integer);"
+                "$PID text, " +
+                "$PPIC text, " +
+                "$PPRICE integer, " +
+                "$PKEY text);"
 
 
         db!!.execSQL(create_ftable)
@@ -161,9 +212,13 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         val drop_ftable = "drop table if exists $FAVORITE_TABLE_NAME;"
         val drop_ptable = "drop table if exists $PURCHASE_TABLE_NAME;"
+        val drop_ctable = "drop table if exists $COIN_TABLE_NAME;"
+        val drop_atable = "drop table if exists $AUCTION_TABLE_NAME;"
 
         db!!.execSQL(drop_ftable)
         db!!.execSQL(drop_ptable)
+        db!!.execSQL(drop_ctable)
+        db!!.execSQL(drop_atable)
         onCreate(db)
     }
 

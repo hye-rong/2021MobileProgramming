@@ -29,13 +29,12 @@ import java.util.*
 class MPMainFragment : Fragment() {
     lateinit var binding: FragmentMPMainBinding
     lateinit var myDBHelper: MyDBHelper
-    lateinit var sharedPreferences: SharedPreferences
     lateinit var db : DatabaseReference
 
     val loadFragment = MPLoadFragment()
     val soldFragment = MPSoldFragment()
     val likeFragment = MPLikeFragment()
-    var userId = "test"
+    val auctionFragment = MyAuctionFragment()
     val mpViewModel : MPViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -48,9 +47,6 @@ class MPMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-        userId = sharedPreferences.getString("Id","null")!!
         initData()
         initView()
     }
@@ -61,9 +57,8 @@ class MPMainFragment : Fragment() {
 
         mpViewModel.soldsLiveData.value = myDBHelper.getAllRecord(1)
 
-        Log.d("EOEOEO", "userId: $userId")
         var loadList = mutableListOf<Product>()
-        db = FirebaseDatabase.getInstance().getReference("Art/$userId")
+        db = FirebaseDatabase.getInstance().getReference("Art/${mpViewModel.userLiveData.value}")
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var children = snapshot.children
@@ -101,7 +96,7 @@ class MPMainFragment : Fragment() {
 
     private fun initView(){
 
-        binding.userId.text = userId
+        binding.userId.text = mpViewModel.userLiveData.value
         binding.apply {
             likeBtn.setOnClickListener {
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -121,12 +116,13 @@ class MPMainFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-            registerArtistBtn.setOnClickListener {
-                //작가 등록 Activity로 이동
+            auctionBtn.setOnClickListener {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentView, auctionFragment)
+                    .addToBackStack(null)
+                    .commit()
             }
-            uploadBtn.setOnClickListener {
-                //작품 등록 Activity로 이동
-            }
+
             fillCoin.setOnClickListener {
                 var coin:Int
                 val dlgBinding = DialogCoinBinding.inflate(layoutInflater)

@@ -25,49 +25,48 @@ import com.example.mteamproject.mypage.Product
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var adapter: AuctionRcAdapter
+    lateinit var adapter2: MainArtAdapter
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
+    lateinit var aucList:ArrayList<Product>
+    lateinit var mainList:ArrayList<Product>
     lateinit var rdb: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         editor = sharedPreferences.edit()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initLayout()
         init()
+        initLayout()
     }
 
     fun init(){
-        // db에서 가져오도록 바꿔야함
-        val aucList = arrayListOf<Product>(
-            Product("111","111", "", 5000),
-            Product("111","111", "", 5000),
-            Product("111","111", "", 5000),
-            Product("111","111", "", 5000),
-            Product("111","111", "", 5000),
-            Product("111","111", "", 5000),
-            Product("111","111", "", 5000)
-        )
-        adapter = AuctionRcAdapter(aucList)
+        aucList = intent.getSerializableExtra("auctionList") as ArrayList<Product>
+        mainList = intent.getSerializableExtra("mainList") as ArrayList<Product>
 
+        adapter = AuctionRcAdapter(aucList)
+        adapter2 = MainArtAdapter(mainList)
         binding.apply {
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity,
                 LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapter
 
-            viewpager.adapter = MainArtAdapter(aucList)
+            viewpager.adapter = adapter2
             TabLayoutMediator(tabLayout, viewpager){
                     _, _ ->
 
             }.attach()
         }
-
     }
 
     fun initLayout(){
@@ -91,24 +90,23 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, ArtistList::class.java)
                     startActivity(intent)
                 }
-                R.id.auction_menu ->{
-                    // 경매 작품 보기 Activity로 이동
 
-                }
                 R.id.home_menu ->{
                     // 홈화면
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.mypage_menu ->{
+                    val uID = intent.getStringExtra("uId").toString()
                     val intent = Intent(this, MyPageActivity::class.java)
+                    intent.putExtra("uId", uID)
                     startActivity(intent)
                 }
                 R.id.upload_menu ->{
                     // 작품 upload로 이동
                     val uID = intent.getStringExtra("uId").toString()
                     val intent = Intent(applicationContext, EnrollPage:: class.java)
-                    intent.putExtra("uID", uID)
+                    intent.putExtra("uId", uID)
                     startActivity(intent)
                 }
                 R.id.load_artist->{
@@ -183,10 +181,9 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, ShowArtListActivity::class.java)
                 startActivity(intent)
             }
-            auctionBtn.setOnClickListener {
-                // 경매목록
-            }
+
         }
+
     }
 
 
@@ -198,4 +195,5 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.openDrawer(GravityCompat.START)
         return true
     }
+
 }

@@ -158,7 +158,7 @@ class EnrollPage: AppCompatActivity() {
             }
 
 //            var userID = sharedPreferences.getString("inputId", null)
-            var userID = intent.getStringExtra("uID")
+            var userID = intent.getStringExtra("uId")
             val enrollInput = EnrollData(userID.toString(),
                 mytitle,
                 imgUrl,

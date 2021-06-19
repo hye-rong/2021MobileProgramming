@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mteamproject.main.MainActivity
@@ -23,6 +24,10 @@ class MyPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyPageBinding.inflate(layoutInflater)
+        val uID = intent.getStringExtra("uId").toString()
+        Log.d("eoeoeo", "MyPageActivity에서 userID: $uID")
+        mpViewModel.userLiveData.value = uID
+
         setContentView(binding.root)
         init()
         initFragment()

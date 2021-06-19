@@ -1,13 +1,17 @@
 package com.example.mteamproject.main
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mteamproject.databinding.MainArtRowBinding
 import com.example.mteamproject.databinding.SimpleAucRowBinding
 import com.example.mteamproject.mypage.Product
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
 
-class MainArtAdapter(val items:MutableList<Product>): RecyclerView.Adapter<MainArtAdapter.MyViewHolder>(){
+class MainArtAdapter(var items:MutableList<Product>): RecyclerView.Adapter<MainArtAdapter.MyViewHolder>(){
 
 
     inner class MyViewHolder(val binding: MainArtRowBinding): RecyclerView.ViewHolder(binding.root){
@@ -23,13 +27,24 @@ class MainArtAdapter(val items:MutableList<Product>): RecyclerView.Adapter<MainA
         holder.binding.apply {
             artView.text = items[position].pId
             artistView.text = items[position].pAuthor
-            //imageView.setImageURI(items[position].pPic)
-            //titleView.text = items[position].pId
+            downloadImg(items[position].pPic, holder)
         }
     }
 
     override fun getItemCount(): Int {
         return items.size
+    }
+    private fun downloadImg(imgloc: String, holder: MainArtAdapter.MyViewHolder) {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.getReference()
+        val submitImg = storageRef.child(imgloc)
+        submitImg.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
+            override fun onSuccess(p0: Uri?) {
+                Glide.with(holder.binding.root)
+                    .load(p0)
+                    .into(holder.binding.imageView)
+            }
+        })
     }
 
 }

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTeamProject">
-        <activity android:name=".login.ArtistEnroll"></activity>
+        <activity android:name=".main.SplashActivity"></activity>
+        <activity android:name=".login.ArtistEnroll" />
         <activity android:name=".ArtDetail" />
         <activity android:name=".login.ArtistProduct" />
         <activity android:name=".login.ProductTest" />

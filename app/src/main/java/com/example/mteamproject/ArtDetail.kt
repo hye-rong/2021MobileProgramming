@@ -60,6 +60,9 @@ class ArtDetail : AppCompatActivity() {
                 }
 
                 ArtDetailPrice.text = price.toString()
+                if(price==-1){
+                    ArtDetailButton.isEnabled = false
+                }
                 if(auction)
                     ArtDetailButton.setText("경매참여")
                 else
@@ -122,6 +125,7 @@ class ArtDetail : AppCompatActivity() {
                                         .child("sellPrice")
                                         .setValue(price)
                                 }
+                                myDBHelper.insertAuctionProduct(product.pId, product.pPic, price, key!!)
                             }
                         }
                         .setNegativeButton("취소"){
@@ -145,6 +149,7 @@ class ArtDetail : AppCompatActivity() {
                                 .child("sellPrice")
                                 .setValue(-1)
                         }
+                        binding.ArtDetailButton.isEnabled = false
 
                     }
                 }

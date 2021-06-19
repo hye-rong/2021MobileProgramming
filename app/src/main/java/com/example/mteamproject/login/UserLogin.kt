@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.ActivityUserLoginBinding
 import com.example.mteamproject.main.MainActivity
+import com.example.mteamproject.main.SplashActivity
 import com.google.firebase.database.*
 
 class UserLogin : AppCompatActivity() {
@@ -27,8 +28,11 @@ class UserLogin : AppCompatActivity() {
 
     fun init(){
         if(sharedPreferences.getBoolean("AutoLogin", false)){
-            val intent = Intent(this@UserLogin, MainActivity::class.java)
+            val userID = sharedPreferences.getString("Id", "")
+            val intent = Intent(this@UserLogin, SplashActivity::class.java)
+            intent.putExtra("uId", userID)
             startActivity(intent)
+            finish()
         }else {
             rdb = FirebaseDatabase.getInstance().getReference("UserDB/User")
             binding.apply {
@@ -75,9 +79,10 @@ class UserLogin : AppCompatActivity() {
                                                     "로그인 성공",
                                                     Toast.LENGTH_SHORT).show()
                                                 val intent =
-                                                    Intent(this@UserLogin, MainActivity::class.java)
+                                                    Intent(this@UserLogin, SplashActivity::class.java)
                                                 intent.putExtra("uId", userID.text.toString())
                                                 startActivity(intent)
+                                                finish()
                                             } else {
                                                 Toast.makeText(this@UserLogin,
                                                     "비밀번호가 틀렸습니다",
