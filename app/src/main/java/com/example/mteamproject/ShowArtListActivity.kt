@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mteamproject.databinding.ActivityShowArtListBinding
 import com.example.mteamproject.login.ArtistList
@@ -56,7 +57,7 @@ class ShowArtListActivity : AppCompatActivity() {
         init()
     }
     private fun initData(){
-        db = FirebaseDatabase.getInstance().getReference("Art/userID")
+        db = FirebaseDatabase.getInstance().getReference("Art/test")
         db.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var children = snapshot.children
@@ -115,18 +116,34 @@ class ShowArtListActivity : AppCompatActivity() {
     }
     private fun init(){
         val layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-
         binding.apply {
             Log.i("init","init")
             adapter1 = ArtLitAdapater(arts1)
-            adapter1.setItemClickListener(object : ArtLitAdapater.ItemClickListener{
-                override fun onClick(view: View, pos: Int) {
-
+            var listener=object : ArtLitAdapater.OnArtClickListener{
+                override fun itemClicked(
+                    holder: ArtLitAdapater.ViewHolder,
+                    view: View,
+                    item: Art,
+                    pos: Int,
+                ) {
+                    val intent = Intent(this@ShowArtListActivity,ArtDetail::class.java)
+                    intent.putExtra("title",item.title)
+                    intent.putExtra("artist",item.artist?.name)
+                    intent.putExtra("cat",item.category)
+                    intent.putExtra("price",item.price)
+                    intent.putExtra("action",item.Auction)
+                    intent.putExtra("endauction",item.auctionenddate)
+                    startActivity(intent)
                 }
-            })
+
+            }
             adapter2 = ArtLitAdapater(arts2)
             adapter3 = ArtLitAdapater(arts3)
             adapter4 = ArtLitAdapater(arts4)
+            adapter1.listener = listener
+            adapter2.listener = listener
+            adapter3.listener = listener
+            adapter4.listener = listener
             val items =arrayOf("전체보기","풍경화","추상화","others")
             val spinnerAdaper = ArrayAdapter(this@ShowArtListActivity,R.layout.support_simple_spinner_dropdown_item,items)
             spinner.adapter = spinnerAdaper

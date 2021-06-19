@@ -8,8 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mteamproject.databinding.ArtRowBinding
 
 class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapater.ViewHolder>(){
+    var listener:OnArtClickListener? = null
+    interface OnArtClickListener{
+        fun itemClicked(holder:ViewHolder,view:View, item:Art,pos: Int)
+    }
     val cateory = arrayListOf<String>("풍경","추상화","서양화","동양화","기타")
     inner class ViewHolder(val binding: ArtRowBinding):RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.root.setOnClickListener {
+                listener?.itemClicked(this,it,items[adapterPosition],adapterPosition)
+            }
+        }
     }
 
     interface ItemClickListener {
@@ -38,16 +47,12 @@ class ArtLitAdapater(val items:ArrayList<Art>) :RecyclerView.Adapter<ArtLitAdapa
             textViewTitle.text = items[pos].title
             textViewArtist.text = items[pos].artist!!.name
             textViewCategory.text = cateory[items[pos].category]
-            if(items[pos].Action){
+            if(items[pos].Auction){
                 val str = "경매 종료일:"+items[pos].auctionenddate
                 textViewPrice.text = str
             }else {
                 textViewPrice.text = items[pos].price.toString()
             }
-        }
-
-        holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it, pos)
         }
     }
 

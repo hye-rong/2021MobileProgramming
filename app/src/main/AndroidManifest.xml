@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mteamproject">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTeamProject">
-        <activity android:name=".login.ArtistProduct">
-        </activity>
+        <activity android:name=".ArtDetail"></activity>
+        <activity android:name=".login.ArtistProduct"></activity>
         <activity android:name=".login.ProductTest" />
         <activity android:name=".login.ArtistPage" />
         <activity android:name=".ArtistPage" />
@@ -26,15 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mypage.MyPageActivity"/>
-        <activity android:name=".ShowArtListActivity">
-
-        </activity>
-        <activity android:name=".main.MainActivity" >
-
-        </activity>
-
-        <activity android:name=".enroll.EnrollPage"/>
+        <activity android:name=".mypage.MyPageActivity" />
+        <activity android:name=".ShowArtListActivity"></activity>
+        <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".enroll.EnrollPage" />
     </application>
 
 </manifest>
