@@ -1,9 +1,14 @@
 package com.example.mteamproject
 
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.mteamproject.databinding.ActivityArtDetailBinding
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
 import java.io.Serializable
 
 class ArtDetail : AppCompatActivity() {
@@ -18,7 +23,7 @@ class ArtDetail : AppCompatActivity() {
         val intent = intent
         if(intent!=null){
             val title = intent.getStringExtra("title")
-            val artwork= intent.getSerializableExtra("artwork")
+            val artwork= intent.getSerializableExtra("art")
             val artist = intent.getStringExtra("artist")
             val catcode = intent.getIntExtra("cat",0)
             val cat = when(catcode){
@@ -33,6 +38,7 @@ class ArtDetail : AppCompatActivity() {
             val enddate = "경매 종료일:"+intent.getStringExtra("endauction")
             binding.apply {
                // ArtDetailImage.setImageBitmap(artwork)
+                downloadImg(artwork.toString())
                 ArtDetailTitlte.text = title
                 ArtDetailArtist.text = artist
                 if(auction){
@@ -44,5 +50,18 @@ class ArtDetail : AppCompatActivity() {
                 textView4.text=cat
             }
         }
+    }
+
+    private fun downloadImg(imgloc: String) {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.getReference()
+        val submitImg = storageRef.child(imgloc)
+        submitImg.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
+            override fun onSuccess(p0: Uri?) {
+                Glide.with(binding.root)
+                    .load(p0)
+                    .into(binding.ArtDetailImage)
+            }
+        })
     }
 }

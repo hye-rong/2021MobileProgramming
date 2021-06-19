@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapFactory.*
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -15,11 +16,14 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.mteamproject.databinding.ActivityShowArtListBinding
 import com.example.mteamproject.login.ArtistList
 import com.example.mteamproject.login.UserLogin
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.okhttp.internal.DiskLruCache
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
@@ -66,6 +70,7 @@ class ShowArtListActivity : AppCompatActivity() {
                         //Log.i("data","${i.value as HashMap<String,String>}")
                         val value = i.value as HashMap<String,String>
                         val imageUrl =value["imageUrl"] as String
+
                         var artwork = null
                         try {
                             val url = URL(imageUrl)
@@ -93,7 +98,8 @@ class ShowArtListActivity : AppCompatActivity() {
                         val price = value["sellPrice"] as Long
                         val auction = value["ifauction"] as Boolean
                         val edate = value["endDate"].toString()
-                        val art = Art(artwork, title, artist, catcode, price.toInt(), auction, edate)
+                        //val art = Art(artwork, title, artist, catcode, price.toInt(), auction, edate)
+                        val art = Art(imageUrl, title, artist, catcode, price.toInt(), auction, edate)
                         arts1.add(art)
                         when (catcode) {
                             0-> {arts2.add(art);adapter2.notifyItemInserted(arts2.size-1)}
