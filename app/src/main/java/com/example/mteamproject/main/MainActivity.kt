@@ -46,13 +46,13 @@ class MainActivity : AppCompatActivity() {
     fun init(){
         // db에서 가져오도록 바꿔야함
         val aucList = arrayListOf<Product>(
-            Product("111","111", Uri.parse("df"), 5000),
-            Product("111","111", Uri.parse("df"), 5000),
-            Product("111","111", Uri.parse("df"), 5000),
-            Product("111","111", Uri.parse("df"), 5000),
-            Product("111","111", Uri.parse("df"), 5000),
-            Product("111","111", Uri.parse("df"), 5000),
-            Product("111","111", Uri.parse("df"), 5000)
+            Product("111","111", "", 5000),
+            Product("111","111", "", 5000),
+            Product("111","111", "", 5000),
+            Product("111","111", "", 5000),
+            Product("111","111", "", 5000),
+            Product("111","111", "", 5000),
+            Product("111","111", "", 5000)
         )
         adapter = AuctionRcAdapter(aucList)
 

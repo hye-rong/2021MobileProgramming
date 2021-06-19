@@ -62,13 +62,15 @@ class ShowArtListActivity : AppCompatActivity() {
     }
     private fun initData(){
 //        db = FirebaseDatabase.getInstance().getReference("ArtRCV")
-        db = FirebaseDatabase.getInstance().getReference("Art/test")
+        db = FirebaseDatabase.getInstance().getReference("ArtRCV")
         db.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var children = snapshot.children
                 if(snapshot.childrenCount>0) {
                     for (i in children.iterator()) {
                         //Log.i("data","${i.value as HashMap<String,String>}")
+                        Log.d("eoeoeo", "key: ${i.key}, ref: ${i.ref}")
+                        val key = i.key
                         val value = i.value as HashMap<String,String>
                         val imageUrl =value["imageUrl"] as String
 
@@ -101,7 +103,7 @@ class ShowArtListActivity : AppCompatActivity() {
                         val edate = value["endDate"].toString()
                         //val art = Art(artwork, title, artist, catcode, price.toInt(), auction, edate)
 //                        val art = Art(imageUrl, title, artist, catcode, price.toInt(), auction, edate)
-                        val art = Art(imageUrl, title, artist, catcode, price.toInt(), auction, edate)
+                        val art = Art(imageUrl, title, artist, catcode, price.toInt(), auction, edate, key!!)
                         arts1.add(art)
                         when (catcode) {
                             0-> {arts2.add(art);adapter2.notifyItemInserted(arts2.size-1)}
@@ -139,9 +141,10 @@ class ShowArtListActivity : AppCompatActivity() {
                     intent.putExtra("artist",item.artist?.name)
                     intent.putExtra("cat",item.category)
                     intent.putExtra("price",item.price)
-                    intent.putExtra("action",item.Auction)
+                    intent.putExtra("auction",item.Auction)
                     intent.putExtra("endauction",item.auctionenddate)
                     intent.putExtra("art",item.artwork)
+                    intent.putExtra("key", item.key)
                     startActivity(intent)
                 }
 

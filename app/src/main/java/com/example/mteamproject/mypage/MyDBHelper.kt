@@ -14,6 +14,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val FAVORITE_TABLE_NAME = "favorites"
         val PURCHASE_TABLE_NAME = "purchases"
         val COIN_TABLE_NAME = "coin"
+        val AUCTION_TABLE_NAME = "auction"
         val PID = "pid"
         val PAUTHOR = "pauthor"
         val PPIC = "ppic"
@@ -33,7 +34,8 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val db = readableDatabase
         val cursor = db.rawQuery(strsql, null)
         cursor.moveToFirst()
-        Log.d("EOEOEO", "getAllRecord : ${cursor.count}")
+        Log.d("EOEOEO", "getAllRecord :${i}번째 0:like, 1:sold => ${cursor.count}개 존재")
+
         if (cursor.count == 0) return pList
 
         do {
@@ -41,7 +43,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
                 Product(
                     cursor.getString(0),
                     cursor.getString(1),
-                    Uri.parse(cursor.getString(2)),
+                    cursor.getString(2),
                     cursor.getInt(3)
                 )
             )
@@ -59,7 +61,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val db = readableDatabase
         val cursor = db.rawQuery(strsql, null)
 
-        Log.d("EOEOEO", "getAllRecord : ${cursor.count}")
+        Log.d("EOEOEO", "getCoin : ${cursor.count}원")
         if (cursor.count == 0){
             val values = ContentValues()
             values.put(PID, "coin")
@@ -92,7 +94,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val values = ContentValues()
         values.put(PID, product.pId)
         values.put(PAUTHOR, product.pAuthor)
-        values.put(PPIC, product.pPic.toString())
+        values.put(PPIC, product.pPic)
         values.put(PPRICE, product.pPrice)
         val db = writableDatabase
         val flag = db.insert(FAVORITE_TABLE_NAME, null, values)
@@ -103,7 +105,7 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val values = ContentValues()
         values.put(PID, product.pId)
         values.put(PAUTHOR, product.pAuthor)
-        values.put(PPIC, product.pPic.toString())
+        values.put(PPIC, product.pPic)
         values.put(PPRICE, product.pPrice)
         val db = writableDatabase
         db.insert(PURCHASE_TABLE_NAME, null, values)
@@ -123,6 +125,13 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
 
     }
 
+    fun findFavorite(pid:String):Boolean{
+        val strsql = "select * from $FAVORITE_TABLE_NAME where $PID='$pid'"
+        val db = writableDatabase
+        val cursor = db.rawQuery(strsql, null)
+        return cursor.count != 0
+
+    }
     override fun onCreate(db: SQLiteDatabase?) {
         val create_ftable = "create table if not exists $FAVORITE_TABLE_NAME("+
                 "$PID text, "+
@@ -137,15 +146,22 @@ class MyDBHelper(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null
         val create_ctable = "create table if not exists $COIN_TABLE_NAME("+
                 "$PID text, "+
                 "$PCOIN integer);"
+        val create_atable = "create table if not exists $AUCTION_TABLE_NAME("+
+                "$PID text, "+
+                "$PCOIN integer);"
+
+
         db!!.execSQL(create_ftable)
         db!!.execSQL(create_ptable)
         db!!.execSQL(create_ctable)
+        db!!.execSQL(create_atable)
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         val drop_ftable = "drop table if exists $FAVORITE_TABLE_NAME;"
         val drop_ptable = "drop table if exists $PURCHASE_TABLE_NAME;"
+
         db!!.execSQL(drop_ftable)
         db!!.execSQL(drop_ptable)
         onCreate(db)

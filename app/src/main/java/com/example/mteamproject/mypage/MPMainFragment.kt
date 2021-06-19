@@ -2,6 +2,7 @@ package com.example.mteamproject.mypage
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -13,9 +14,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.example.mteamproject.Art
+import com.example.mteamproject.Artist
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.DialogCoinBinding
 import com.example.mteamproject.databinding.FragmentMPMainBinding
+import com.google.firebase.database.*
+import java.io.BufferedInputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 
@@ -23,11 +30,12 @@ class MPMainFragment : Fragment() {
     lateinit var binding: FragmentMPMainBinding
     lateinit var myDBHelper: MyDBHelper
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var db : DatabaseReference
 
     val loadFragment = MPLoadFragment()
     val soldFragment = MPSoldFragment()
     val likeFragment = MPLikeFragment()
-
+    var userId = "test"
     val mpViewModel : MPViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -40,21 +48,52 @@ class MPMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        userId = sharedPreferences.getString("Id","null")!!
         initData()
         initView()
     }
 
     private fun initData(){
         myDBHelper = MyDBHelper(requireContext())
-        Log.d("EOEOEO", "${myDBHelper.getAllRecord(0).size}")
         mpViewModel.likesLiveData.value = myDBHelper.getAllRecord(0)
 
         mpViewModel.soldsLiveData.value = myDBHelper.getAllRecord(1)
-        //내 작품 가져오는 작업 해줘야함 - firebase
 
+        Log.d("EOEOEO", "userId: $userId")
+        var loadList = mutableListOf<Product>()
+        db = FirebaseDatabase.getInstance().getReference("Art/$userId")
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var children = snapshot.children
+                if(snapshot.childrenCount>0) {
+                    for (i in children.iterator()) {
+                        //Log.i("data","${i.value as HashMap<String,String>}")
+                        val value = i.value as HashMap<String,String>
 
+                        val imageUrl =value["imageUrl"] as String
+                        val title = value["title"] as String
+                        val artist_name = value["userID"] as String
+                        val price = value["sellPrice"] as Long
+                        Log.d("EOEOEO","load된 작품 가져오기 : $title")
+                        loadList.add(Product(title, artist_name, imageUrl,price.toInt()))
+                    }
+                }
+                mpViewModel.loadsLiveData.value = loadList
+            }
 
-        Log.d("EOEOEO", "LiveData: ${mpViewModel.likesLiveData.value!!.size}")
+            override fun onCancelled(error: DatabaseError) {
+                //TODO("Not yet implemented")
+            }
+
+        })
+        mpViewModel.loadsLiveData.observe(viewLifecycleOwner, {
+            Log.d("EOEOEO", "loadLiveData: ${mpViewModel.loadsLiveData.value!!.size}")
+            binding.loadNum.text = it.size.toString()
+        })
+
+        Log.d("EOEOEO", "likeLiveData: ${mpViewModel.likesLiveData.value!!.size}")
         mpViewModel.likesLiveData.observe(viewLifecycleOwner, Observer {
             binding.likeNum.text = it.size.toString()
         })
@@ -62,10 +101,6 @@ class MPMainFragment : Fragment() {
 
     private fun initView(){
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-        val userId = sharedPreferences.getString("Id","null")
-        Log.d("eoeoeo", userId!!)
         binding.userId.text = userId
         binding.apply {
             likeBtn.setOnClickListener {
@@ -115,7 +150,7 @@ class MPMainFragment : Fragment() {
             coin.text = myDBHelper.getCoin().toString()
             likeNum.text = mpViewModel.likesLiveData.value!!.size.toString()
             soldNum.text = mpViewModel.soldsLiveData.value!!.size.toString()
-            //loadNum.setText()
+
         }
     }
 
