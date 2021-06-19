@@ -61,8 +61,8 @@ class ShowArtListActivity : AppCompatActivity() {
         init()
     }
     private fun initData(){
-//        db = FirebaseDatabase.getInstance().getReference("ArtRCV")
         db = FirebaseDatabase.getInstance().getReference("ArtRCV")
+
         db.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var children = snapshot.children

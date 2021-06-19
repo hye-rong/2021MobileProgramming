@@ -110,7 +110,7 @@ class EnrollPage: AppCompatActivity() {
                     binding.enrollDay.text = "${year}년${month + 1}월${dayOfMonth}일"
                     enrollTime = "${year}년${month + 1}월${dayOfMonth}일"
                     uploadDate[0]=year
-                    uploadDate[1]=month
+                    uploadDate[1]=month+1
                     uploadDate[2]=dayOfMonth
                 }
 
@@ -150,7 +150,12 @@ class EnrollPage: AppCompatActivity() {
             var getTime = preTime.format(date)
 
             mytitle = binding.sellTitleInput.text.toString()
-            sellPrice = binding.sellPriceInput.text.toString().toInt()
+            if(!ifauction) {
+                Toast.makeText(applicationContext, ifauction.toString(), Toast.LENGTH_LONG).show()
+                sellPrice = binding.sellPriceInput.text.toString().toInt()
+            } else {
+                sellPrice = 0
+            }
 
 //            var userID = sharedPreferences.getString("inputId", null)
             var userID = intent.getStringExtra("uID")
