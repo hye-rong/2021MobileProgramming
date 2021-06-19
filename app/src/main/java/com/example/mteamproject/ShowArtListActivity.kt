@@ -94,7 +94,7 @@ class ShowArtListActivity : AppCompatActivity() {
                             "추상화" -> 1
                             "서양화" -> 2
                             "동양화" -> 3
-                            else -> 5
+                            else -> 4
                         }
                         val price = value["sellPrice"] as Long
                         val auction = value["ifauction"] as Boolean
