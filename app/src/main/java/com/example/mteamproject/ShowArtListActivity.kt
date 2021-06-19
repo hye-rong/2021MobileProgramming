@@ -61,6 +61,7 @@ class ShowArtListActivity : AppCompatActivity() {
         init()
     }
     private fun initData(){
+//        db = FirebaseDatabase.getInstance().getReference("ArtRCV")
         db = FirebaseDatabase.getInstance().getReference("Art/test")
         db.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -99,6 +100,7 @@ class ShowArtListActivity : AppCompatActivity() {
                         val auction = value["ifauction"] as Boolean
                         val edate = value["endDate"].toString()
                         //val art = Art(artwork, title, artist, catcode, price.toInt(), auction, edate)
+//                        val art = Art(imageUrl, title, artist, catcode, price.toInt(), auction, edate)
                         val art = Art(imageUrl, title, artist, catcode, price.toInt(), auction, edate)
                         arts1.add(art)
                         when (catcode) {

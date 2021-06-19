@@ -21,6 +21,7 @@ class EnrollDB(input: EnrollData) {
 
 
         Enref.child("Art").child(input.userID).push().setValue(input)
+        Enref.child("ArtRCV").push().setValue(input)
    }
 
     public fun readEnrollDB() {

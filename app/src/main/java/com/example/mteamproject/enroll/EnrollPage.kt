@@ -19,6 +19,7 @@ import java.util.*
 
 class EnrollPage: AppCompatActivity() {
     val GET_GALLERY_IMAGE = 200
+    var mytitle: String = ""
     var imgUrl: String = ""
     var ifauction : Boolean = true //T면 경매, F면 정가제 판
     var userGenre : String = "" //장르
@@ -33,6 +34,7 @@ class EnrollPage: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = AcitivityEnrollartBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initTitle()
         getImg()
         sellOption()
         initSpinner()
@@ -51,6 +53,11 @@ class EnrollPage: AppCompatActivity() {
             intent2.setType("image/*")
         }
     }
+
+    private fun initTitle() {
+        mytitle = binding.sellTitleInput.getText().toString()
+    }
+
 
     private fun sellOption() {
         binding.pickSell.setOnCheckedChangeListener { group, checkedId ->
@@ -142,12 +149,13 @@ class EnrollPage: AppCompatActivity() {
             var preTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             var getTime = preTime.format(date)
 
-
+            mytitle = binding.sellTitleInput.text.toString()
             sellPrice = binding.sellPriceInput.text.toString().toInt()
 
 //            var userID = sharedPreferences.getString("inputId", null)
             var userID = intent.getStringExtra("uID")
             val enrollInput = EnrollData(userID.toString(),
+                mytitle,
                 imgUrl,
                 userGenre,
                 sellPrice,
