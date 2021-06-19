@@ -133,6 +133,7 @@ class ShowArtListActivity : AppCompatActivity() {
                     intent.putExtra("price",item.price)
                     intent.putExtra("action",item.Auction)
                     intent.putExtra("endauction",item.auctionenddate)
+                    intent.putExtra("art",item.artwork)
                     startActivity(intent)
                 }
 
