@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.ActivityArtistPageBinding
 import com.example.mteamproject.databinding.ActivityArtistProductBinding
+import com.example.mteamproject.main.MainActivity
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -28,9 +29,9 @@ class ArtistProduct : AppCompatActivity() {
         val aid = intent.getStringExtra("aId")
 
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rdb = FirebaseDatabase.getInstance().getReference("UserDB/Artist")
+        rdb = FirebaseDatabase.getInstance().getReference("UserDB/User")
 
-        val query = rdb.child(aid.toString()).child("artList")
+        val query = rdb.child(aid.toString()).child("zArtList")
         val option =  FirebaseRecyclerOptions.Builder<Product1>().setQuery(query, Product1::class.java).build()
         adapter = ArtistProductListAdapter(option)
         adapter.itemClickListener = object : ArtistProductListAdapter.OnItemClickListener {
@@ -44,7 +45,10 @@ class ArtistProduct : AppCompatActivity() {
         binding.apply {
             artistProductRecyclerView.layoutManager = layoutManager
             artistProductRecyclerView.adapter = adapter
-
+            homeBtn.setOnClickListener {
+                val intent = Intent(this@ArtistProduct, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
     override fun onStart() {

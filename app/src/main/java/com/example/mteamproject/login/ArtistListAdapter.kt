@@ -9,8 +9,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 
 
-class ArtistListAdapter (options: FirebaseRecyclerOptions<Artist1>)
-    : FirebaseRecyclerAdapter<Artist1, ArtistListAdapter.ViewHolder>(options){
+class ArtistListAdapter (options: FirebaseRecyclerOptions<User>)
+    : FirebaseRecyclerAdapter<User, ArtistListAdapter.ViewHolder>(options){
 
     interface OnItemClickListener{
         fun OnItemClick(view: View, position: Int)
@@ -34,9 +34,9 @@ class ArtistListAdapter (options: FirebaseRecyclerOptions<Artist1>)
 
 
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Artist1) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: User) {
         holder.binding.apply {
-            artistId.text = model.aName
+            artistId.text = model.uName
             likeNum.text = model.likeNum.toString()
             soldNum.text = model.soldNum.toString()
             loadNum.text = model.loadNum.toString()

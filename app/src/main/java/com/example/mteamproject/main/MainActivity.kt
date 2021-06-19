@@ -1,10 +1,13 @@
 package com.example.mteamproject.main
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -13,18 +16,27 @@ import com.example.mteamproject.R
 import com.example.mteamproject.ShowArtListActivity
 import com.example.mteamproject.databinding.ActivityMainBinding
 import com.example.mteamproject.enroll.EnrollPage
+import com.example.mteamproject.login.ArtistEnroll
 import com.example.mteamproject.login.ArtistList
+import com.example.mteamproject.login.UserLogin
+import com.example.mteamproject.login.asdActivity
 import com.example.mteamproject.mypage.MyPageActivity
 import com.example.mteamproject.mypage.Product
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.database.*
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var adapter: AuctionRcAdapter
+    lateinit var sharedPreferences: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
+    lateinit var rdb: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        editor = sharedPreferences.edit()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initLayout()
@@ -100,11 +112,43 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.load_artist->{
-                    //작가 등록 페이지로 이동
+                    val uid = sharedPreferences.getString("Id", "")
+                    var arr = arrayListOf<Any>()
+
+                    rdb = FirebaseDatabase.getInstance().getReference("UserDB/User")
+                    rdb.child(uid.toString())
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+                            }
+                            override fun onDataChange(p0: DataSnapshot) {
+                                var num = 0
+                                for (snapshot in p0.children) {
+                                    arr.add(snapshot.value.toString())
+                                    num++
+                                    if(num == 9)
+                                        break
+                                }
+                                if(arr[0].toString().toBoolean()){
+                                    Toast.makeText(this@MainActivity, "작가로 등록되어 있습니다", Toast.LENGTH_SHORT).show()
+                                }else {
+                                    val intent = Intent(this@MainActivity, ArtistEnroll::class.java)
+                                    intent.putExtra("uId", arr[6].toString())
+                                    intent.putExtra("uName", arr[7].toString())
+                                    intent.putExtra("uAge", arr[5].toString().toInt())
+                                    startActivity(intent)
+                                }
+                            }
+                        })
                 }
                 R.id.logout -> {
                     //로그아웃 기능
-
+                    editor.putBoolean("AutoLogin", false)
+                    editor.apply()
+                    editor.putString("Id", "")
+                    editor.putString("Password","")
+                    editor.commit()
+                    val intent = Intent(this, UserLogin::class.java)
+                    startActivity(intent)
                 }
             }
 

@@ -3,7 +3,7 @@
     package="com.example.mteamproject">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,11 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MTeamProject">
-        <activity android:name=".ArtDetail"></activity>
-        <activity android:name=".login.ArtistProduct"></activity>
+        <activity android:name=".login.ArtistEnroll"></activity>
+        <activity android:name=".ArtDetail" />
+        <activity android:name=".login.ArtistProduct" />
         <activity android:name=".login.ProductTest" />
         <activity android:name=".login.ArtistPage" />
-        <activity android:name=".ArtistPage" />
         <activity android:name=".login.ArtistList" />
         <activity android:name=".login.asdActivity" />
         <activity android:name=".login.UserSignUp" />
@@ -28,8 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".mypage.MyPageActivity" />
-        <activity android:name=".ShowArtListActivity"></activity>
-        <activity android:name=".main.MainActivity"></activity>
+        <activity android:name=".ShowArtListActivity" />
+        <activity android:name=".main.MainActivity" />
         <activity android:name=".enroll.EnrollPage" />
     </application>
 

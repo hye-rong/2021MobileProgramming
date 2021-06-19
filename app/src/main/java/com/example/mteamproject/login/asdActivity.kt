@@ -23,16 +23,38 @@ class asdActivity : AppCompatActivity() {
         binding.apply {
             button.text = uid
             button.setOnClickListener {
-                var rdb = FirebaseDatabase.getInstance().getReference("UserDB/Artist")
-                val item = Artist1("123", "홍길동", 24,10, 13, "홍길동 이력")
-                val item1 = Artist1("a123", "유후", 10,13, 40, "유후 이력")
-                val item2 = Artist1("b123", "안드레이", 30,12, 77, "안드레이 이력")
-                val item3 = Artist1("c123", "김유신", 40,23, 44, "김유신 이력")
-                val item4 = Artist1("d123", "name", 5,1, 5, "name 이력")
+                var rdb = FirebaseDatabase.getInstance().getReference("UserDB/User")
+                //val item = User("123", "1234", "유후", 30, false, 0, 0, 0, "")
+
+                val item = User("123","123", "홍길동", 26, true,  24,10, 13, "홍길동 이력")
+                val item1 = User("a123", "a123", "유후", 25, true, 10,13, 40, "유후 이력")
+                val item2 = User("b123", "a123", "안드레이", 24, true,  30,12, 77, "안드레이 이력")
+                val item3 = User("c123", "a123", "김유신", 28, true, 40,23, 44, "김유신 이력")
+                val item4 = User("d123", "a123", "name", 29, true, 5,1, 5, "name 이력")
                 val item5 = Product1("3", "안작1", "안드레이",0, 5000)
                 val item6 = Product1("113", "안작2", "안드레이",0, 3000)
                 val item7 = Product1("23", "안작3", "안드레이",0, 1000)
                 val item8 = Product1("300", "안작4", "안드레이",0, 2000)
+
+                val item9 = Product1("4", "홍길동작품1", "홍길동",0, 5000)
+                val item10 = Product1("117", "홍길동작품2", "홍길동",0, 3000)
+                val item11 = Product1("24", "홍길동작품3", "홍길동",0, 1000)
+                val item12 = Product1("301", "홍길동작품4", "홍길동",0, 2000)
+
+                val item13 = Product1("5", "유후작품1", "유후",0, 5000)
+                val item14 = Product1("114", "유후작품2", "유후",0, 3000)
+                val item15 = Product1("25", "유후작품3", "유후",0, 1000)
+                val item16 = Product1("302", "유후작품4", "유후",0, 2000)
+
+                val item17 = Product1("6", "김유신작품1", "김유신",0, 5000)
+                val item18 = Product1("115", "김유신작품2", "김유신",0, 3000)
+                val item19 = Product1("26", "김유신작품3", "김유신",0, 1000)
+                val item20 = Product1("303", "김유신작품4", "김유신",0, 2000)
+
+                val item21 = Product1("7", "name작품1", "name",0, 5000)
+                val item22 = Product1("116", "name작품2", "name",0, 3000)
+                val item23 = Product1("27", "name작품3", "name",0, 1000)
+                val item24 = Product1("304", "name작품4", "name",0, 2000)
                 /*rdb.child("123").setValue(item)
                 rdb.child("a123").setValue(item1)
                 rdb.child("b123").setValue(item2)
@@ -58,10 +80,12 @@ class asdActivity : AppCompatActivity() {
                 rdb.child("d123").child("artList").child(2.toString()).setValue(117)
                 rdb.child("d123").child("artList").child(3.toString()).setValue(27)
                 rdb.child("d123").child("artList").child(4.toString()).setValue(304)
-                rdb.child("b123").child("artList").child(1.toString()).setValue(item5)
-                rdb.child("b123").child("artList").child(2.toString()).setValue(item6)
-                rdb.child("b123").child("artList").child(3.toString()).setValue(item7)
-                rdb.child("b123").child("artList").child(4.toString()).setValue(item8)*/
+
+                rdb.child("123").setValue(item)
+                rdb.child("a123").setValue(item1)
+                rdb.child("b123").setValue(item2)
+                rdb.child("c123").setValue(item3)
+                rdb.child("d123").setValue(item4)
                 rdb.child("b123").child("aspec").setValue("평양시 보통강구역 원 보통강동지역에서 출생하였다.\n" +
                         "1984년에 평양미술대학 조선화학부를 졸업하였다.\n" +
                         "만수대창작사에서 15년간 창작생활을 하고 있다.\n" +
@@ -79,7 +103,31 @@ class asdActivity : AppCompatActivity() {
                         "‘백두밀영의 봄’(1992) 등의 창작에 참가하였다.\n" +
                         "일반주제 및 풍경화들로는 ‘변치 말자 다진 맹세’(1987), ‘2월의 련광정’(1987),\n" +
                         "‘지원자들’(1988), ‘련광정’(1990) 등이 대표작이다.\n" +
-                        "1997년에 공훈예술가의 칭호를 수여받았다.")
+                        "1997년에 공훈예술가의 칭호를 수여받았다.")*/
+                rdb.child("b123").child("zArtList").child(1.toString()).setValue(item5)
+                rdb.child("b123").child("zArtList").child(2.toString()).setValue(item6)
+                rdb.child("b123").child("zArtList").child(3.toString()).setValue(item7)
+                rdb.child("b123").child("zArtList").child(4.toString()).setValue(item8)
+
+                rdb.child("123").child("zArtList").child(1.toString()).setValue(item9)
+                rdb.child("123").child("zArtList").child(2.toString()).setValue(item10)
+                rdb.child("123").child("zArtList").child(3.toString()).setValue(item11)
+                rdb.child("123").child("zArtList").child(4.toString()).setValue(item12)
+
+                rdb.child("a123").child("zArtList").child(1.toString()).setValue(item13)
+                rdb.child("a123").child("zArtList").child(2.toString()).setValue(item14)
+                rdb.child("a123").child("zArtList").child(3.toString()).setValue(item15)
+                rdb.child("a123").child("zArtList").child(4.toString()).setValue(item16)
+
+                rdb.child("c123").child("zArtList").child(1.toString()).setValue(item17)
+                rdb.child("c123").child("zArtList").child(2.toString()).setValue(item18)
+                rdb.child("c123").child("zArtList").child(3.toString()).setValue(item19)
+                rdb.child("c123").child("zArtList").child(4.toString()).setValue(item20)
+
+                rdb.child("d123").child("zArtList").child(1.toString()).setValue(item21)
+                rdb.child("d123").child("zArtList").child(2.toString()).setValue(item22)
+                rdb.child("d123").child("zArtList").child(3.toString()).setValue(item23)
+                rdb.child("d123").child("zArtList").child(4.toString()).setValue(item24)
 
             }
         }

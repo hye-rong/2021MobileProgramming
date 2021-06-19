@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.ActivityArtistListBinding
 import com.example.mteamproject.databinding.ActivityArtistPageBinding
+import com.example.mteamproject.main.MainActivity
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.*
 
@@ -38,7 +39,7 @@ class ArtistPage : AppCompatActivity() {
             artistSpec.text = aspec
 
             homeBtn.setOnClickListener {
-                val intent = Intent(this@ArtistPage, UserLogin::class.java)
+                val intent = Intent(this@ArtistPage, MainActivity::class.java)
                 startActivity(intent)
             }
 

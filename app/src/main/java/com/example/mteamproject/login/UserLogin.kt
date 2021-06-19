@@ -51,10 +51,14 @@ class UserLogin : AppCompatActivity() {
                                         override fun onCancelled(p0: DatabaseError) {
                                         }
                                         override fun onDataChange(p0: DataSnapshot) {
+                                            var num = 0
                                             for (snapshot in p0.children) {
                                                 arr.add(snapshot.value.toString())
+                                                num++
+                                                if(num == 9)
+                                                    break
                                             }
-                                            if (arr[4].toString() == userPW.text.toString()) {
+                                            if (arr[8].toString() == userPW.text.toString()) {
                                                 if (autoLoginCheckBox.isChecked) {
                                                     editor.putBoolean("AutoLogin", true)
                                                     editor.apply()
@@ -63,8 +67,8 @@ class UserLogin : AppCompatActivity() {
                                                     editor.commit()
                                                 } else {
                                                     editor.putBoolean("AutoLogin", false)
-                                                    editor.putString("Id", "")
-                                                    editor.putString("Password", "")
+                                                    editor.putString("Id", userID.text.toString())
+                                                    editor.putString("Password", userPW.text.toString())
                                                     editor.commit()
                                                 }
                                                 Toast.makeText(this@UserLogin,

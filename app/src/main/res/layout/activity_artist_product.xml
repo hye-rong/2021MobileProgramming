@@ -35,8 +35,5 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/artistProductRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:stackFromEnd="true"
-        app:reverseLayout="true"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

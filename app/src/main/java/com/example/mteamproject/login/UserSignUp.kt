@@ -57,11 +57,7 @@ class UserSignUp : AppCompatActivity() {
                         if (userPW.text.toString() == checkPW.text.toString()) {
                             if (userName.text.toString().length >= 1) {
                                 if (userAge.text.toString().length >= 1) {
-                                    val item = User(userID.text.toString(),
-                                        userPW.text.toString(),
-                                        userName.text.toString(),
-                                        userAge.text.toString().toInt(),
-                                        false)
+                                    val item = User(userID.text.toString(), userPW.text.toString(), userName.text.toString(), userAge.text.toString().toInt(), false, 0, 0, 0, "")
                                     rdb.child(userID.text.toString()).setValue(item)
                                     Toast.makeText(this@UserSignUp, "회원가입 성공", Toast.LENGTH_SHORT).show()
                                     val intent = Intent(this@UserSignUp, UserLogin::class.java)
