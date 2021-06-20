@@ -233,10 +233,6 @@ class ShowArtListActivity : AppCompatActivity() {
             recycler4.layoutManager = LinearLayoutManager(applicationContext,LinearLayoutManager.VERTICAL,false)
             recycler4.adapter = adapter4
 
-            homeBtn.setOnClickListener {
-                val intent = Intent(this@ShowArtListActivity, SplashActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
 }

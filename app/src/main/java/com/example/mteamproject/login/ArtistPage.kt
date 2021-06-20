@@ -54,11 +54,6 @@ class ArtistPage : AppCompatActivity() {
             loadNum.text = lonum.toString()
             artistSpec.text = aspec
 
-            homeBtn.setOnClickListener {
-                val intent = Intent(this@ArtistPage, SplashActivity::class.java)
-                startActivity(intent)
-            }
-
             artistProductBtn.setOnClickListener {
                 val intent = Intent(this@ArtistPage, ShowArtListActivity::class.java)
                 intent.putExtra("aId", aid)

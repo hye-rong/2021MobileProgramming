@@ -43,9 +43,6 @@ class MyPageActivity : AppCompatActivity() {
     private fun init(){
         myDBHelper = MyDBHelper(this)
 
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, SplashActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 }

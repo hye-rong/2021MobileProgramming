@@ -67,10 +67,7 @@ class ArtistList : AppCompatActivity() {
         binding.apply {
             artistRecyclerView.layoutManager = layoutManager
             artistRecyclerView.adapter = adapter
-            homeBtn.setOnClickListener {
-                val intent = Intent(this@ArtistList, SplashActivity::class.java)
-                startActivity(intent)
-            }
+
         }
     }
 
