@@ -59,6 +59,20 @@ class ShowArtListActivity : AppCompatActivity() {
         editor = sharedPreferences.edit()
         initData()
         init()
+        if (intent!=null){
+            var cat = intent.getIntExtra("category",0);
+
+            when(cat){
+                0->{
+                    binding.spinner.setSelection(0)
+
+                }
+                1->binding.spinner.setSelection(1)
+                2->binding.spinner.setSelection(2)
+                3->binding.spinner.setSelection(3)
+                else->binding.spinner.setSelection(3)
+            }
+        }
     }
     private fun initData(){
         val intent = intent
