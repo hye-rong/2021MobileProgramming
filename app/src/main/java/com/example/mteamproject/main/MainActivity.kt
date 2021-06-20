@@ -102,8 +102,8 @@ class MainActivity : AppCompatActivity() {
                     // 작품 upload로 이동
                     if(sharedPreferences.getBoolean("isArtist", false)) {
                         val uID = intent.getStringExtra("uId").toString()
-                        val intent = Intent(this, EnrollPage::class.java)
-                        intent.putExtra("uId", uID)
+                        val intent = Intent(applicationContext, EnrollPage::class.java)
+                        intent.putExtra("uID", uID)
                         startActivity(intent)
                     }else{
                         Toast.makeText(this@MainActivity, "먼저 작가로 등록하시길 바랍니다", Toast.LENGTH_SHORT).show()
