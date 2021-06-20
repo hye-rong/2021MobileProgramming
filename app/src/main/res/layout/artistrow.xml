@@ -41,9 +41,9 @@
                     android:src="@drawable/fullheart"
                     android:layout_marginRight="10dp"/>
                 <TextView
-                    android:layout_width="30dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="likes"
+                    android:text="'좋아요' 수"
                     android:layout_marginRight="5dp"/>
 
                 <TextView
@@ -64,9 +64,9 @@
                     android:src="@drawable/fullheart"
                     android:layout_marginRight="10dp"/>
                 <TextView
-                    android:layout_width="30dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="load"
+                    android:text="작품 갯수"
                     android:layout_marginRight="5dp"/>
                 <TextView
                     android:id="@+id/load_num"

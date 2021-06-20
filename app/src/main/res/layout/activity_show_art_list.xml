@@ -28,23 +28,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/showartistlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="작가보기" />
-
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="50dp"
-            android:text="로그아웃"
-            android:textSize="15sp" />
-
         <ImageButton
             android:id="@+id/homeBtn"
             android:layout_width="30dp"

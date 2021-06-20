@@ -56,6 +56,7 @@ class ArtistList : AppCompatActivity() {
                 val intent = Intent(this@ArtistList, ArtistPage::class.java)
                 intent.putExtra("aId", adapter.getItem(position).uId.toString())
                 intent.putExtra("aName", adapter.getItem(position).uName.toString())
+                intent.putExtra("forImage", adapter.getItem(position).zImgUrl.toString())
                 intent.putExtra("likeNum", adapter.getItem(position).likeNum.toString().toInt())
                 intent.putExtra("loadNum", adapter.getItem(position).loadNum.toString().toInt())
                 intent.putExtra("aSpec", adapter.getItem(position).aSpec.toString())

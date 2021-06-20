@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.mteamproject.databinding.ActivityShowArtListBinding
 import com.example.mteamproject.login.ArtistList
 import com.example.mteamproject.login.UserLogin
+import com.example.mteamproject.main.MainActivity
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.database.*
@@ -59,6 +60,20 @@ class ShowArtListActivity : AppCompatActivity() {
         editor = sharedPreferences.edit()
         initData()
         init()
+        if (intent!=null){
+            var cat = intent.getIntExtra("category",0);
+
+            when(cat){
+                0->{
+                    binding.spinner.setSelection(0)
+
+                }
+                1->binding.spinner.setSelection(1)
+                2->binding.spinner.setSelection(2)
+                3->binding.spinner.setSelection(3)
+                else->binding.spinner.setSelection(3)
+            }
+        }
     }
     private fun initData(){
         val intent = intent
@@ -216,21 +231,9 @@ class ShowArtListActivity : AppCompatActivity() {
             recycler3.adapter = adapter3
             recycler4.layoutManager = LinearLayoutManager(applicationContext,LinearLayoutManager.VERTICAL,false)
             recycler4.adapter = adapter4
-            logout.setOnClickListener {
-                editor.putBoolean("AutoLogin", false)
-                editor.apply()
-                editor.putString("Id", "")
-                editor.putString("Password","")
-                editor.commit()
-                val intent = Intent(this@ShowArtListActivity, UserLogin::class.java)
-                startActivity(intent)
-            }
+
             homeBtn.setOnClickListener {
-                val intent = Intent(this@ShowArtListActivity, UserLogin::class.java)
-                startActivity(intent)
-            }
-            showartistlist.setOnClickListener {
-                val intnet = Intent(this@ShowArtListActivity,ArtistList::class.java)
+                val intent = Intent(this@ShowArtListActivity, MainActivity::class.java)
                 startActivity(intent)
             }
         }
