@@ -91,11 +91,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.home_menu ->{
-                    // 홈화면
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
+
                 R.id.mypage_menu ->{
                     val uID = intent.getStringExtra("uId").toString()
                     val intent = Intent(this, MyPageActivity::class.java)
