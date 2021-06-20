@@ -21,6 +21,7 @@ import com.example.mteamproject.databinding.ActivityShowArtListBinding
 import com.example.mteamproject.login.ArtistList
 import com.example.mteamproject.login.UserLogin
 import com.example.mteamproject.main.MainActivity
+import com.example.mteamproject.main.SplashActivity
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.database.*
@@ -233,7 +234,7 @@ class ShowArtListActivity : AppCompatActivity() {
             recycler4.adapter = adapter4
 
             homeBtn.setOnClickListener {
-                val intent = Intent(this@ShowArtListActivity, MainActivity::class.java)
+                val intent = Intent(this@ShowArtListActivity, SplashActivity::class.java)
                 startActivity(intent)
             }
         }

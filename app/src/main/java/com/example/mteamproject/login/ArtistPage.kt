@@ -13,6 +13,7 @@ import com.example.mteamproject.ShowArtListActivity
 import com.example.mteamproject.databinding.ActivityArtistListBinding
 import com.example.mteamproject.databinding.ActivityArtistPageBinding
 import com.example.mteamproject.main.MainActivity
+import com.example.mteamproject.main.SplashActivity
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.*
@@ -54,7 +55,7 @@ class ArtistPage : AppCompatActivity() {
             artistSpec.text = aspec
 
             homeBtn.setOnClickListener {
-                val intent = Intent(this@ArtistPage, MainActivity::class.java)
+                val intent = Intent(this@ArtistPage, SplashActivity::class.java)
                 startActivity(intent)
             }
 

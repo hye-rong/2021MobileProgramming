@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mteamproject.ShowArtListActivity
 import com.example.mteamproject.databinding.ActivityArtistListBinding
 import com.example.mteamproject.main.MainActivity
+import com.example.mteamproject.main.SplashActivity
 import com.example.mteamproject.mypage.MyDBHelper
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.*
@@ -67,7 +68,7 @@ class ArtistList : AppCompatActivity() {
             artistRecyclerView.layoutManager = layoutManager
             artistRecyclerView.adapter = adapter
             homeBtn.setOnClickListener {
-                val intent = Intent(this@ArtistList, MainActivity::class.java)
+                val intent = Intent(this@ArtistList, SplashActivity::class.java)
                 startActivity(intent)
             }
         }
