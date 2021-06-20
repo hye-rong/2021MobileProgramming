@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mteamproject.main.MainActivity
 import com.example.mteamproject.R
 import com.example.mteamproject.databinding.ActivityMyPageBinding
+import com.example.mteamproject.main.SplashActivity
 
 
 class MyPageActivity : AppCompatActivity() {
@@ -43,7 +44,7 @@ class MyPageActivity : AppCompatActivity() {
         myDBHelper = MyDBHelper(this)
 
         binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, SplashActivity::class.java)
             startActivity(intent)
         }
     }
