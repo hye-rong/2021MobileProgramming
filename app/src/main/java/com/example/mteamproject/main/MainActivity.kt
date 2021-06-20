@@ -2,7 +2,6 @@ package com.example.mteamproject.main
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -19,15 +18,12 @@ import com.example.mteamproject.enroll.EnrollPage
 import com.example.mteamproject.login.ArtistEnroll
 import com.example.mteamproject.login.ArtistList
 import com.example.mteamproject.login.UserLogin
-import com.example.mteamproject.login.asdActivity
 import com.example.mteamproject.mypage.MyPageActivity
 import com.example.mteamproject.mypage.Product
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -100,10 +96,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.upload_menu ->{
                     // 작품 upload로 이동
-                    val uID = intent.getStringExtra("uId").toString()
-                    val intent = Intent(applicationContext, EnrollPage:: class.java)
-                    intent.putExtra("uId", uID)
-                    startActivity(intent)
+                    if(sharedPreferences.getBoolean("isArtist", false)) {
+                        val uID = intent.getStringExtra("uId").toString()
+                        val intent = Intent(applicationContext, EnrollPage::class.java)
+                        intent.putExtra("uID", uID)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(this@MainActivity, "먼저 작가로 등록하시길 바랍니다", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
                 R.id.load_artist->{
                     val uid = sharedPreferences.getString("Id", "")
@@ -137,6 +138,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.logout -> {
                     //로그아웃 기능
                     editor.putBoolean("AutoLogin", false)
+                    editor.putBoolean("isArtist", false)
                     editor.apply()
                     editor.putString("Id", "")
                     editor.putString("Password","")

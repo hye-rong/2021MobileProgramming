@@ -57,7 +57,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2.5"
+            android:layout_weight="4"
 
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -97,28 +97,6 @@
                 <TextView
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:text="sold"
-                    android:layout_marginRight="5dp"/>
-                <TextView
-                    android:id="@+id/sold_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/fullheart"
-                    android:layout_marginRight="10dp"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
                     android:text="load"
                     android:layout_marginRight="5dp"/>
                 <TextView
@@ -129,22 +107,6 @@
 
             </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/likeBtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/heart"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="likes"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

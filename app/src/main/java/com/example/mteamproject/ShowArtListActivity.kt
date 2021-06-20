@@ -59,9 +59,29 @@ class ShowArtListActivity : AppCompatActivity() {
         editor = sharedPreferences.edit()
         initData()
         init()
+        if (intent!=null){
+            var cat = intent.getIntExtra("category",0);
+
+            when(cat){
+                0->{
+                    binding.spinner.setSelection(0)
+
+                }
+                1->binding.spinner.setSelection(1)
+                2->binding.spinner.setSelection(2)
+                3->binding.spinner.setSelection(3)
+                else->binding.spinner.setSelection(3)
+            }
+        }
     }
     private fun initData(){
-        db = FirebaseDatabase.getInstance().getReference("ArtRCV")
+        val intent = intent
+        val aid = intent.getStringExtra("aId")
+
+        if(aid.toString().length >= 1)
+            db = FirebaseDatabase.getInstance().getReference("Art/$aid")
+        if(aid.toString() == "null")
+            db = FirebaseDatabase.getInstance().getReference("ArtRCV")
 
         db.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

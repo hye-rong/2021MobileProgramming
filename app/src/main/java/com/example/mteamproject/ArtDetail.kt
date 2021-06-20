@@ -14,8 +14,7 @@ import com.example.mteamproject.databinding.DialogCoinBinding
 import com.example.mteamproject.mypage.MyDBHelper
 import com.example.mteamproject.mypage.Product
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import java.io.Serializable
 
@@ -24,6 +23,7 @@ class ArtDetail : AppCompatActivity() {
     lateinit var myDBHelper:MyDBHelper
     lateinit var product: Product
     lateinit var db: DatabaseReference
+    lateinit var rdb: DatabaseReference
     var auction = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,16 +86,40 @@ class ArtDetail : AppCompatActivity() {
         })
     }
     fun initBtn(){
+        val intent = intent
+        val artist = intent.getStringExtra("artist")
+
         myDBHelper = MyDBHelper(this)
         db = FirebaseDatabase.getInstance().getReference("ArtRCV")
+        rdb = FirebaseDatabase.getInstance().getReference("UserDB/User")
         val coin = myDBHelper.getCoin()
         binding.apply {
             likeBtn.isChecked = myDBHelper.findFavorite(product.pId)
             likeBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-                if(isChecked)
+                if(isChecked) {
                     myDBHelper.insertFavoriteProduct(product)
-                else
+                    rdb.child(artist.toString()).child("likeNum")
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+                            }
+                            override fun onDataChange(p0: DataSnapshot) {
+                                var like = p0.value.toString().toInt()
+                                rdb.child(artist.toString()).child("likeNum").setValue((like+1).toString().toInt())
+                            }
+                        })
+                }
+                else {
                     myDBHelper.deleteFavoriteProduct(product.pId)
+                    rdb.child(artist.toString()).child("likeNum")
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+                            }
+                            override fun onDataChange(p0: DataSnapshot) {
+                                var like = p0.value.toString().toInt()
+                                rdb.child(artist.toString()).child("likeNum").setValue((like-1).toString().toInt())
+                            }
+                        })
+                }
             }
 
             ArtDetailButton.setOnClickListener {

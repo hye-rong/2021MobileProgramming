@@ -75,6 +75,14 @@ class UserLogin : AppCompatActivity() {
                                                     editor.putString("Password", userPW.text.toString())
                                                     editor.commit()
                                                 }
+                                                if(arr[0].toString().toBoolean()){
+                                                    editor.putBoolean("isArtist", true)
+                                                    editor.commit()
+                                                }else{
+                                                    editor.putBoolean("isArtist", false)
+                                                    editor.commit()
+                                                }
+
                                                 Toast.makeText(this@UserLogin,
                                                     "로그인 성공",
                                                     Toast.LENGTH_SHORT).show()

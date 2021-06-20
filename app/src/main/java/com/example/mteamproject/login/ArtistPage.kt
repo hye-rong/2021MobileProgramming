@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mteamproject.R
+import com.example.mteamproject.ShowArtListActivity
 import com.example.mteamproject.databinding.ActivityArtistListBinding
 import com.example.mteamproject.databinding.ActivityArtistPageBinding
 import com.example.mteamproject.main.MainActivity
@@ -26,7 +27,6 @@ class ArtistPage : AppCompatActivity() {
         val aid = intent.getStringExtra("aId")
         val aname = intent.getStringExtra("aName")
         val linum = intent.getIntExtra("likeNum", -1)
-        val sonum = intent.getIntExtra("soldNum", -1)
         val lonum = intent.getIntExtra("loadNum", -1)
         val aspec = intent.getStringExtra("aSpec")
 
@@ -34,7 +34,6 @@ class ArtistPage : AppCompatActivity() {
         binding.apply {
             artistId.text = aname
             likeNum.text = linum.toString()
-            soldNum.text = sonum.toString()
             loadNum.text = lonum.toString()
             artistSpec.text = aspec
 
@@ -44,7 +43,7 @@ class ArtistPage : AppCompatActivity() {
             }
 
             artistProductBtn.setOnClickListener {
-                val intent = Intent(this@ArtistPage, ArtistProduct::class.java)
+                val intent = Intent(this@ArtistPage, ShowArtListActivity::class.java)
                 intent.putExtra("aId", aid)
                 startActivity(intent)
             }
