@@ -11,7 +11,7 @@
 6. 작품 경매 및 구매 기능
 
 ## Development Environment
-* Android Studio @
+* Android Studio @ 3.4.1
 * SQLite
 * Firebase
 
